@@ -8,7 +8,12 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 books=[
     {"id":1,"title":"Helle","author":"Author 1"},
     {"id":2,"title":"Book 2","author":"Author 2"},
-    {"id":3,"title":"Book 3","author":"Author 3"}
+    {"id":3,"title":"Book 3","author":"Author 3"},
+    {"id":4,"title":"Book 4","author":"Author 4"},
+    {"id":5,"title":"Book 5","author":"Author 5"},
+    {"id":6,"title":"Book 6","author":"Author 6"},
+    {"id":7,"title":"Book 7","author":"Author 7"},
+    {"id":8,"title":"Book 8","author":"Author 8"}
 ]
 
 @app.route("/")
@@ -37,6 +42,15 @@ def put_id_book(data_book):
             book.update(updated_book)
             return jsonify({"books": books}), 200
 
+    return jsonify({"error": "Book not found"}), 404
+
+@app.route("/books/<int:data_book>", methods=["DELETE"])
+@cross_origin()
+def delete_id_book(data_book):
+    for book in books:
+        if book["id"] == data_book:
+            books.remove(book)
+            return jsonify({"books": books}), 200
     return jsonify({"error": "Book not found"}), 404
 
 if __name__ == "__main__":
